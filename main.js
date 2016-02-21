@@ -97,6 +97,7 @@ document.onclick=function(){
         turboleft=turboleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
       }
       items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
+      console.log(CollidedPointToPlane(cursor.x,cursor.y));
     }else{
       if(itemflag!=0){
         var newitem=new Item();

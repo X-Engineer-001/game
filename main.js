@@ -54,7 +54,7 @@ function CollidedPointToPlane(x,y){
   for(var i=0;i<items.length;i++){
     if(i>0&&(IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x+(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)||
     IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x-(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight))||
-    i=0&&IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x,items[0].y,itemwidth,itemheight)
+    i==0&&IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x,items[0].y,itemwidth,itemheight)
     ){
       return i;
     }

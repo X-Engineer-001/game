@@ -56,10 +56,10 @@ function CollidedPointToPlane(x,y){
     IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x-(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)))||
     i==0&&IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x,items[0].y,itemwidth,itemheight)
     ){
-      return i;
+      return {Flag:true,count:i};
     }
   }
-  return false;
+  return {Flag:false};
 }
 function IsCollidedMovingPointToPlaneOrSurfaceToPlane(x,y,width,height){
   for(var i=0;i<items.length;i++){
@@ -78,7 +78,6 @@ document.onmousemove=function(event){
 };
 document.onclick=function(){
   if(flag==0){
-          console.log(CollidedPointToPlane(cursor.x,cursor.y));
     if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,600,5,20,20)){
       itemflag=1;
     }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,625,5,20,20)){
@@ -87,17 +86,17 @@ document.onclick=function(){
       itemflag=3;
     }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,675,5,20,20)){
       itemflag=4;
-    }else if(CollidedPointToPlane(cursor.x,cursor.y)!=false){
-      if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==1){
-        armorleft=armorleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
-      }else if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==2){
-        gunleft=gunleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
-      }else if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==3){
-        storageleft=storageleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
-      }else if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==4){
-        turboleft=turboleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
+    }else if(CollidedPointToPlane(cursor.x,cursor.y).Flag){
+      if(items[CollidedPointToPlane(cursor.x,cursor.y).count].item==1){
+        armorleft=armorleft+items[CollidedPointToPlane(cursor.x,cursor.y).count].itemcost;
+      }else if(items[CollidedPointToPlane(cursor.x,cursor.y).count].item==2){
+        gunleft=gunleft+items[CollidedPointToPlane(cursor.x,cursor.y).count].itemcost;
+      }else if(items[CollidedPointToPlane(cursor.x,cursor.y).count].item==3){
+        storageleft=storageleft+items[CollidedPointToPlane(cursor.x,cursor.y).count].itemcost;
+      }else if(items[CollidedPointToPlane(cursor.x,cursor.y).count].item==4){
+        turboleft=turboleft+items[CollidedPointToPlane(cursor.x,cursor.y).count].itemcost;
       }
-      items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
+      items.splice(CollidedPointToPlane(cursor.x,cursor.y).count,1);
     }else{
       if(itemflag!=0){
         var newitem=new Item();

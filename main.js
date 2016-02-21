@@ -86,7 +86,7 @@ document.onclick=function(){
       itemflag=3;
     }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,675,5,20,20)){
       itemflag=4;
-    }else if(CollidedPointToPlane(cursor.x,cursor.y).Flag){
+    }else if(CollidedPointToPlane(cursor.x,cursor.y).Flag&&CollidedPointToPlane(cursor.x,cursor.y).count!=0){
       if(items[CollidedPointToPlane(cursor.x,cursor.y).count].item==1){
         armorleft=armorleft+items[CollidedPointToPlane(cursor.x,cursor.y).count].itemcost;
       }else if(items[CollidedPointToPlane(cursor.x,cursor.y).count].item==2){

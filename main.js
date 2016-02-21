@@ -54,7 +54,7 @@ function CollidedPointToPlane(x,y){
   for(var i=0;i<items.length;i++){
     if(i>0&&(IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x+(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)||
     IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x-(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight))||
-    i<0&&IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x,items[0].y,itemwidth,itemheight)
+    i=0&&IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x,items[0].y,itemwidth,itemheight)
     ){
       return i;
     }
@@ -97,8 +97,10 @@ document.onclick=function(){
       }
       items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
     }else{
-      var newitem=new Item();
-      items.push(newitem);
+      if(itemflag!=0){
+        var newitem=new Item();
+        items.push(newitem);
+      }
       if(itemflag==1){
         armorleft=armorleft-items[items.length-1].itemcost;
         if(armorleft<0){
@@ -198,7 +200,7 @@ function draw(){
         draw2(i);
       }else if(items[i].item==3){
         draw3(i);
-      }else{
+      }else if(items[i].item==4){
         draw4(i);
       }
     }

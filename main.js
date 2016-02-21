@@ -84,8 +84,8 @@ document.onclick=function(){
       itemflag=3;
     }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,675,5,20,20)){
       itemflag=4;
-    }else if(IsCollidedMovingPointToPointOrPointToSurface(x,y,targetx,targety,targetwidth,targetheight)!=false){
-      items.splice(IsCollidedMovingPointToPointOrPointToSurface(x,y,targetx,targety,targetwidth,targetheight),1);
+    }else if(CollidedPointToPlane(cursor.x,cursor.y)!=false){
+      items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
     }else{
       var newitem=new Item();
       items.push(newitem);

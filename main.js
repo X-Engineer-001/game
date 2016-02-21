@@ -78,6 +78,7 @@ document.onmousemove=function(event){
 };
 document.onclick=function(){
   if(flag==0){
+          console.log(CollidedPointToPlane(cursor.x,cursor.y));
     if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,600,5,20,20)){
       itemflag=1;
     }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,625,5,20,20)){
@@ -97,7 +98,6 @@ document.onclick=function(){
         turboleft=turboleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
       }
       items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
-      console.log(CollidedPointToPlane(cursor.x,cursor.y));
     }else{
       if(itemflag!=0){
         var newitem=new Item();

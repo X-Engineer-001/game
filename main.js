@@ -34,25 +34,25 @@ var items=[
     item:0,
     x:340,
     y:340,
-  }
+  },
   {
     item:1,
     x:1,
     y:0,
     itemcost:2
-  }
+  },
   {
     item:2,
     x:0,
     y:-2,
     itemcost:1
-  }
+  },
   {
     item:3,
     x:0,
     y:-1,
     itemcost:1
-  }
+  },
   {
     item:4,
     x:1,

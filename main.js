@@ -81,8 +81,8 @@ function draw4(I){
 }
 function Item(){
   this.item=itemflag;
-  this.x=(cursor.x-(cursor.x%itemwidth)-items=[0].x)/itemwidth;
-  this.y=(cursor.y-(cursor.y%itemheight)-items=[0].y)/itemheight;
+  this.x=(cursor.x-(cursor.x%itemwidth)-items[0].x)/itemwidth;
+  this.y=(cursor.y-(cursor.y%itemheight)-items[0].y)/itemheight;
   if(this.x=(cursor.x-(cursor.x%itemwidth)-items=[0].x)/itemwidth;==0){
     this.itemcost=1;
   }else{

@@ -86,7 +86,6 @@ document.onclick=function(){
     }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,675,5,20,20)){
       itemflag=4;
     }else if(CollidedPointToPlane(cursor.x,cursor.y)!=false){
-      items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
       if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==1){
         armorleft=armorleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
       }else if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==2){
@@ -96,6 +95,7 @@ document.onclick=function(){
       }else if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==4){
         turboleft=turboleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
       }
+      items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
     }else{
       var newitem=new Item();
       items.push(newitem);

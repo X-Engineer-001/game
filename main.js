@@ -86,7 +86,7 @@ document.onclick=function(){
       itemflag=4;
     }else if(CollidedPointToPlane(cursor.x,cursor.y)!=false){
       items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
-    }else{
+    }else if((itemflag==1&&armorleft>0)||(itemflag==2&&gunleft>0)||(itemflag==3&&storageleft>0)||(itemflag==4&&turboleft>0)){
       var newitem=new Item();
       items.push(newitem);
     }

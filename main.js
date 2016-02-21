@@ -52,8 +52,9 @@ function IsCollidedMovingPointToSurfaceOrSurfaceToSurface(x,y,width,height,targe
 }
 function CollidedPointToPlane(x,y){
   for(var i=0;i<items.length;i++){
-    if(IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x+(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)||
-    IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x-(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)
+    if(i>0&&(IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x+(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)||
+    IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x-(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight))||
+    i<0&&IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x,items[0].y,itemwidth,itemheight)
     ){
       return i;
     }
@@ -86,9 +87,43 @@ document.onclick=function(){
       itemflag=4;
     }else if(CollidedPointToPlane(cursor.x,cursor.y)!=false){
       items.splice(CollidedPointToPlane(cursor.x,cursor.y),1);
-    }else if((itemflag==1&&armorleft>0)||(itemflag==2&&gunleft>0)||(itemflag==3&&storageleft>0)||(itemflag==4&&turboleft>0)){
+      if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==1){
+        armorleft=armorleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
+      }else if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==2){
+        gunleft=gunleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
+      }else if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==3){
+        storageleft=storageleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
+      }else if(items[CollidedPointToPlane(cursor.x,cursor.y)].item==4){
+        turboleft=turboleft+items[CollidedPointToPlane(cursor.x,cursor.y)].itemcost;
+      }
+    }else{
       var newitem=new Item();
       items.push(newitem);
+      if(itemflag==1){
+        armorleft=armorleft-items[items.length-1].itemcost;
+        if(armorleft<0){
+          armorleft=armorleft+items[items.length-1].itemcost;
+          items.splice(items.length-1,1);
+        }
+      }else if(itemflag==2){
+        gunleft=gunleft-items[items.length-1].itemcost;
+        if(gunleft<0){
+          gunleft=gunleft+items[items.length-1].itemcost;
+          items.splice(items.length-1,1);
+        }
+      }else if(itemflag==3){
+        storageleft=storageleft-items[items.length-1].itemcost;
+        if(storageleft<0){
+          storageleft=storageleft+items[items.length-1].itemcost;
+          items.splice(items.length-1,1);
+        }
+      }else if(itemflag==4){
+        turboleft=turboleft-items[items.length-1].itemcost;
+        if(turboleft<0){
+          turboleft=turboleft+items[items.length-1].itemcost;
+          items.splice(items.length-1,1);
+        }
+      }
     }
   }
 };

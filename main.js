@@ -25,9 +25,72 @@ var cursor={
   x:0,
   y:0
 };
+function IsCollidedMovingPointToPointOrPointToSurface(x,y,targetx,targety,targetwidth,targetheight){
+  if(x>=targetx&&
+    x<=targetx+targetwidth&&
+    y>=targety&&
+    y<=targety+targetheight){
+    return true;
+  }else{
+    return false;
+  }
+}
+function IsCollidedMovingPointToSurfaceOrSurfaceToSurface(x,y,width,height,targetx,targety,targetwidth,targetheight){
+  if(IsCollidedMovingPointToPointOrPointToSurface(x,y,targetx,targety,targetwidth,targetheight)||
+    IsCollidedMovingPointToPointOrPointToSurface(x+width,y,targetx,targety,targetwidth,targetheight)||
+    IsCollidedMovingPointToPointOrPointToSurface(x,y+height,targetx,targety,targetwidth,targetheight)||
+    IsCollidedMovingPointToPointOrPointToSurface(x+width,y+height,targetx,targety,targetwidth,targetheight)||
+    IsCollidedMovingPointToPointOrPointToSurface(targetx,targety,x,y,width,height)||
+    IsCollidedMovingPointToPointOrPointToSurface(targetx+targetwidth,targety,x,y,width,height)||
+    IsCollidedMovingPointToPointOrPointToSurface(targetx,targety+targetheight,x,y,width,height)||
+    IsCollidedMovingPointToPointOrPointToSurface(targetx+targetwidth,targety+targetheight,x,y,width,height)
+    ){
+    return true;
+  }else{
+    return false;
+  }
+}
+function CollidedPointToPlane(x,y){
+  for(var i=0;i<items.length;i++){
+    if(IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x+(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)||
+    IsCollidedMovingPointToPointOrPointToSurface(x,y,items[0].x-(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)
+    ){
+      return i;
+    }
+  }
+  return false;
+}
+function IsCollidedMovingPointToPlaneOrSurfaceToPlane(x,y,width,height){
+  for(var i=0;i<items.length;i++){
+    if(IsCollidedMovingPointToSurfaceOrSurfaceToSurface(x,y,width,height,items[0].x+(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)||
+    IsCollidedMovingPointToSurfaceOrSurfaceToSurface(x,y,width,height,items[0].x-(items[i].x*itemwidth),items[0].y+(items[i].y*itemheight),itemwidth,itemheight)
+    ){
+      return true;
+    }
+  }
+  return false;
+}
 document.onmousemove=function(event){
   cursor.x=event.offsetX;
   cursor.y=event.offsetY;
+};
+document.onclick=function(){
+  if(flag==0){
+    if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,600,5,20,20)){
+      itemflag=1;
+    }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,625,5,20,20)){
+      itemflag=2;
+    }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,650,5,20,20)){
+      itemflag=3;
+    }else if(IsCollidedMovingPointToPointOrPointToSurface(cursor.x,cursor.y,675,5,20,20)){
+      itemflag=4;
+    }else if(IsCollidedMovingPointToPointOrPointToSurface(x,y,targetx,targety,targetwidth,targetheight)!=false){
+      items.splice(IsCollidedMovingPointToPointOrPointToSurface(x,y,targetx,targety,targetwidth,targetheight),1);
+    }else{
+      var newitem=new Item();
+      items.push(newitem);
+    }
+  }
 };
 var items=[
   {
@@ -92,16 +155,6 @@ function Item(){
 function draw(){
   ctx.drawImage(bg,0,0,700,700);
   if(flag==0){
-    ctx.drawImage(armor,600,5,20,20);
-    ctx.drawImage(gun,625,5,20,20);
-    ctx.drawImage(storage,650,5,20,20);
-    ctx.drawImage(turbo,675,5,20,20);
-    ctx.font="20px Arial";
-    ctx.fillStyle="white";
-    ctx.fillText(armorleft,600,25);
-    ctx.fillText(gunleft,625,25);
-    ctx.fillText(storageleft,650,25);
-    ctx.fillText(turboleft,675,25);
     draw0();
     for(var i=1;i<items.length;i++){
       if(items[i].item==1){
@@ -114,6 +167,16 @@ function draw(){
         draw4(i);
       }
     }
+    ctx.drawImage(armor,600,5,20,20);
+    ctx.drawImage(gun,625,5,20,20);
+    ctx.drawImage(storage,650,5,20,20);
+    ctx.drawImage(turbo,675,5,20,20);
+    ctx.font="20px Arial";
+    ctx.fillStyle="white";
+    ctx.fillText(armorleft,605,20);
+    ctx.fillText(gunleft,630,20);
+    ctx.fillText(storageleft,655,20);
+    ctx.fillText(turboleft,680,20);
   }
 }
 setInterval(draw,1000/FPS)
